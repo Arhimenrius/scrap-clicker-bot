@@ -14,7 +14,6 @@ class ModeController():
     def control(self):
         detector = ModeDetector()
         if self.isDetectorUp == False:
-            t = threading.Thread(name='child procs', target=detector.detect)
+            detector.start()
             self.isDetectorUp = True
-            t.start()
         print(detector.currentMode())
