@@ -1,15 +1,21 @@
 import random
 import threading
+from src.video_stream import VideoStream
 
 
 class ModeDetector(threading.Thread):
     mode = 'default'
+    portForStreaming = '5777'
+    streamingUri = ''
 
     def __init__(self):
+        self.streamingUri = 'tcp://127.0.0.1:' + self.portForStreaming
         threading.Thread.__init__(self)
         pass
 
     def run(self):
+        video1 = VideoStream(self.portForStreaming)
+        video1.start()
         while True:
             randval = random.randint(1, 10)
             if randval < 3:

@@ -1,15 +1,15 @@
 import subprocess
+import threading
 
 
-class VideoStream:
+class VideoStream(threading.Thread):
     video = 0
     server = 0
     port = None
 
     def __init__(self, port):
         self.port = port
-        self.initialize_video()
-        self.initialize_tcp_server()
+        threading.Thread.__init__(self)
 
     def keep_mobile_video_streaming_alive(self):
         if self.video == 0 or self.video.poll() is not None:
@@ -31,3 +31,9 @@ class VideoStream:
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE
         )
+
+    def run(self):
+        self.initialize_video()
+        self.initialize_tcp_server()
+        while True:
+            self.keep_mobile_video_streaming_alive()

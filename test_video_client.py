@@ -24,7 +24,11 @@ def get_video(input_id):
 	        	#if((x >= 235 and x <= 405) and (y >= 100 and y <= 370)):
         		#	print(x, y)
         #cv2.imshow('mask',magnetsMask)
-        cv2.imshow('video', frame)
+
+        cropped = frame[0:30, 300:350]
+        cv2.imshow("cropped", cropped)
+
+        # cv2.imshow('video', frame)
         cv2.waitKey(1)
     pass
 
