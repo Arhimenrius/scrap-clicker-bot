@@ -30,7 +30,7 @@ class ModeController:
         video1.start()
 
         print(self.streamingUri)
-        time.sleep(2)
+        time.sleep(1)
         camera = cv2.VideoCapture(self.streamingUri)
         mode = 'default'
         font = cv2.FONT_HERSHEY_SIMPLEX
