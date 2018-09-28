@@ -19,7 +19,7 @@ class VideoStream(threading.Thread):
 
     def initialize_video(self):
         self.video = subprocess.Popen(
-            ["adb", "exec-out", "screenrecord", "--bit-rate=1m", "--output-format=h264", "--size=640x480", "-"],
+            ["adb", "exec-out", "screenrecord", "--bit-rate=1m", "--output-format=h264", "--size=480x640", "-"],
             stdout=subprocess.PIPE, shell=False
         )
 
