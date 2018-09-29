@@ -1,7 +1,11 @@
-import cv2
+from src.mobile import Mobile
+from time import sleep
+import random
 
 
 class CollectSteel:
+    mobile = None
+
     minBlue = 140
     maxBlue = 155
     minGreen = 180
@@ -13,6 +17,13 @@ class CollectSteel:
     yMax = 175
     xMin = 60
     xMax = 420
+
+    collectSteelFirstRowY = 550
+    collectSteelSecondRowY = 650
+    stepSize = 75
+
+    def __init__(self):
+        self.mobile = Mobile()
 
     def is_mode_active(self, frame):
         cropped = frame[self.yMin:self.yMax, self.xMin:self.xMax]
@@ -26,4 +37,16 @@ class CollectSteel:
         return False
 
     def process_mode(self):
-        pass
+        self.mobile.initTouch()
+        for step in range(14):
+            x = (self.stepSize * step) + random.randint(0, 10)
+            y = self.collectSteelFirstRowY + random.randint(0, 10)
+
+            self.mobile.actionDuringTouch(x, y)
+
+        for step in range(14):
+            x = (self.stepSize * step) + random.randint(0, 10)
+            y = self.collectSteelSecondRowY + random.randint(0, 10)
+
+            self.mobile.actionDuringTouch(x, y)
+        self.mobile.clearTouch()

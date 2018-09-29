@@ -1,10 +1,22 @@
+from src.mobile import Mobile
+import random
+
+
 class CollectMagnetCloud:
+    mobile = None
+
     yMin = 0
-    yMax = 40
+    yMax = 30
     xMin = 200
-    xMax = 300
+    xMax = 250
 
     minimumColorToExpect = 220
+
+    collectMagnetRowY = 470
+    stepSize = 50
+
+    def __init__(self):
+        self.mobile = Mobile()
 
     def is_mode_active(self, frame):
         cropped = frame[self.yMin:self.yMax, self.xMin:self.xMax]
@@ -16,4 +28,11 @@ class CollectMagnetCloud:
         return False
 
     def process_mode(self):
+        self.mobile.initTouch()
+        for step in range(21):
+            x = (self.stepSize * step) + random.randint(0, 70)
+            y = self.collectMagnetRowY + random.randint(0, 70)
+
+            self.mobile.actionDuringTouch(x, y)
+        self.mobile.clearTouch()
         pass

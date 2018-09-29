@@ -28,8 +28,6 @@ class ModeController:
     def control(self):
         video1 = VideoStream(self.portForStreaming)
         video1.start()
-
-        print(self.streamingUri)
         time.sleep(1)
         camera = cv2.VideoCapture(self.streamingUri)
         mode = 'default'
@@ -43,7 +41,7 @@ class ModeController:
             cv2.imshow("video", frame)
 
             cv2.waitKey(1)
-
+            # self.collectSteelMode.process_mode()
             if self.resolveAntiMacroMode.is_mode_active(frame):
                 self.resolveAntiMacroMode.process_mode()
                 mode = 'Anti'
@@ -55,4 +53,4 @@ class ModeController:
                 self.collectSteelMode.process_mode()
             else:
                 mode = 'Merge'
-                self.mergeMode.process_mode()
+                self.mergeMode.process_mode(frame)
