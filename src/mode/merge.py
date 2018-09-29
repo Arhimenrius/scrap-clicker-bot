@@ -11,6 +11,7 @@ class Merge:
         self.barrels_detector = BarrelsDetector()
 
     def process_mode(self, frame):
-        barrel_per_position = self.barrels_detector.detect_types_per_position(frame)
-        # print(barrel_per_position)
+        barrel_per_position = self.barrels_detector.types_per_position(frame)
+        print('XXXXXXXXXXXXXXXXXXXXXX');
+        print(barrel_per_position)
         pass

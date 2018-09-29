@@ -41,7 +41,6 @@ class ModeController:
             cv2.imshow("video", frame)
 
             cv2.waitKey(1)
-            # self.collectSteelMode.process_mode()
             if self.resolveAntiMacroMode.is_mode_active(frame):
                 self.resolveAntiMacroMode.process_mode()
                 mode = 'Anti'
