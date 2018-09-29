@@ -1,31 +1,34 @@
 import numpy
+import cv2
 
 
 class BarrelsDetector:
-    barrel_height = 68
+    barrel_height = 28  # 68 if crop full barrel
     barrel_width = 42
 
+    y_offset = 20
     x_beginning = 108
-    y_beginning = 85
+    y_beginning = 85 + y_offset
 
     x_space_between_barrels = 33
-    y_space_between_barrels = 26
+    y_space_between_barrels = 66  # 26 if crop full barrel
 
     x_elements = [1, 2, 3, 4]
     y_elements = [1, 2, 3, 4, 5]
 
     # Rmin/max, Gmin/max, Bmin/max
     color_of_levels = [
-        [[63, 71], [73, 81], [64, 72]],
-        [[130, 138], [205, 213], [209, 213]],
-        [[103, 111], [82, 90], [26, 34]],
-        [[204, 212], [197, 205], [173, 181]],
-        [[111, 119], [91, 99], [62, 70]],
-        [[112, 120], [106, 114], [93, 101]],
-        [[179, 187], [167, 175], [50, 58]],
-        [[56, 64], [137, 145], [59, 67]],
-        [[202, 210], [212, 220], [192, 200]],
-        [[102, 110], [116, 124], [102, 110]],
+        [[95, 105], [100, 113], [95, 105]],  # 0
+        [[75, 85], [80, 90], [75, 85]],  # 1
+        [[155, 165], [235, 245], [235, 245]],  # 2
+        [[80, 90], [53, 63], [0, 10]],  # 3
+        [[213, 223], [215, 225], [212, 222]],  # 4
+        [[92, 102], [55, 65], [33, 43]],  # 5
+        [[133, 143], [122, 132], [112, 122]],  # 6
+        [[205, 215], [182, 192], [80, 90]],  # 7
+        [[62, 72], [160, 170], [65, 75]],  # 8
+        [[195, 205], [198, 208], [195, 205]],  # 9
+        [[90, 100], [93, 103], [90, 100]],  # 10
     ]
 
     # [elementId => [x => [min, max], y => [min, max]]
@@ -66,13 +69,14 @@ class BarrelsDetector:
         return average_colors
 
     def detect_type_per_position(self, average_colors):
-        level_per_position = list(range(20))
+        level_per_position = numpy.zeros(20, dtype=numpy.uint8)
         for position_id, average_color in enumerate(average_colors):
             for level, color_of_level in enumerate(self.color_of_levels):
                 if color_of_level[2][0] < average_color[0] < color_of_level[2][1] \
                         and color_of_level[1][0] < average_color[1] < color_of_level[1][1] \
                         and color_of_level[0][0] < average_color[2] < color_of_level[0][1]:
-                    level_per_position[position_id] = level + 1
+                    level_per_position[position_id] = level
+                    break
 
         return level_per_position
 

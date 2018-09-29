@@ -6,11 +6,11 @@ class CollectMagnetCloud:
     mobile = None
 
     yMin = 0
-    yMax = 30
+    yMax = 40
     xMin = 200
-    xMax = 250
+    xMax = 300
 
-    minimumColorToExpect = 220
+    minimumColorToExpect = 200
 
     collectMagnetRowY = 470
     stepSize = 50
