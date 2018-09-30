@@ -35,8 +35,6 @@ class Merge:
         [650, 1500],
         [875, 1500],
     ]
-    number_of_frames_to_skip = 30
-    skipped_frames = 0
 
     distance_from_final_position_1 = 50
     distance_from_final_position_2 = 30
@@ -54,9 +52,9 @@ class Merge:
         pairs_to_merge = []
         barrel_per_position = self.barrels_detector.types_per_position(frame)
         for barrel_position, barrel_level in enumerate(barrel_per_position):
-            # if barrel_level >= self.max_level:
-            #     self.remove_barrel(barrel_position)
-            #     continue
+            if barrel_level >= self.max_level:
+                self.remove_barrel(barrel_position)
+                continue
 
             if barrel_level not in waiting_for_pair:
                 waiting_for_pair[barrel_level] = []
@@ -91,53 +89,42 @@ class Merge:
             place_to_confirm[1] - self.distance_from_final_position_1 + random.randint(0, 10)
         )
         self.mobile.clearTouch()
-        sleep(0.1)
 
     def process_mode(self, frame):
-        # if not every 5th frame, then skip
-        if self.skipped_frames != self.number_of_frames_to_skip:
-            self.skipped_frames = self.skipped_frames + 1
-            return
-        # in other case, process it
-        else:
-            self.skipped_frames = 0
-            pairs = self.find_pairs(frame)
-            for pair in pairs:
-                self.mobile.initTouch()
-                element_position_1 = self.elements[pair[0]]
-                element_position_2 = self.elements[pair[1]]
-                self.mobile.actionDuringTouch(
-                    element_position_1[0] + random.randint(0, 10),
-                    element_position_1[1] + random.randint(0, 10)
-                )
+        pairs = self.find_pairs(frame)
+        for pair in pairs:
+            self.mobile.initTouch()
+            element_position_1 = self.elements[pair[0]]
+            element_position_2 = self.elements[pair[1]]
+            self.mobile.actionDuringTouch(
+                element_position_1[0] + random.randint(0, 10),
+                element_position_1[1] + random.randint(0, 10)
+            )
 
-                self.mobile.actionDuringTouch(
-                    element_position_2[0] - self.distance_from_final_position_1 + random.randint(0, 10),
-                    element_position_2[1] - self.distance_from_final_position_1 + random.randint(0, 10)
-                )
+            self.mobile.actionDuringTouch(
+                element_position_2[0] - self.distance_from_final_position_1 + random.randint(0, 10),
+                element_position_2[1] - self.distance_from_final_position_1 + random.randint(0, 10)
+            )
 
-                self.mobile.actionDuringTouch(
-                    element_position_2[0] - self.distance_from_final_position_2 + random.randint(0, 10),
-                    element_position_2[1] - self.distance_from_final_position_2 + random.randint(0, 10)
-                )
+            self.mobile.actionDuringTouch(
+                element_position_2[0] - self.distance_from_final_position_2 + random.randint(0, 10),
+                element_position_2[1] - self.distance_from_final_position_2 + random.randint(0, 10)
+            )
 
-                self.mobile.actionDuringTouch(
-                    element_position_2[0] - self.distance_from_final_position_3 + random.randint(0, 10),
-                    element_position_2[1] - self.distance_from_final_position_3 + random.randint(0, 10)
-                )
+            self.mobile.actionDuringTouch(
+                element_position_2[0] - self.distance_from_final_position_3 + random.randint(0, 10),
+                element_position_2[1] - self.distance_from_final_position_3 + random.randint(0, 10)
+            )
 
-                sleep(0.01)
-                self.mobile.actionDuringTouch(
-                    element_position_2[0] + random.randint(0, 10),
-                    element_position_2[1] + random.randint(0, 10)
-                )
+            self.mobile.actionDuringTouch(
+                element_position_2[0] + random.randint(0, 10),
+                element_position_2[1] + random.randint(0, 10)
+            )
 
-                self.mobile.clearTouch()
+            self.mobile.clearTouch()
 
-                # random touch to avoid cheat detector
+            # random touch to avoid cheat detector
 
-                sleep(0.01)
-                self.mobile.initTouch()
-                self.mobile.actionDuringTouch(0, random.randint(200, 1000))
-                self.mobile.clearTouch()
-                sleep(0.01)
+            self.mobile.initTouch()
+            self.mobile.actionDuringTouch(0, random.randint(200, 1000))
+            self.mobile.clearTouch()

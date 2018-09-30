@@ -18,6 +18,9 @@ class ModeController:
     mergeMode = None
     resolveAntiMacroMode = None
 
+    number_of_frames_to_skip_for_merge = 30
+    skipped_frames_for_merge = 0
+
     def __init__(self):
         self.streamingUri = 'tcp://127.0.0.1:' + self.portForStreaming
         self.collectMagnetCloudMode = CollectMagnetCloud()
@@ -44,4 +47,11 @@ class ModeController:
             elif self.collectSteelMode.is_mode_active(frame):
                 self.collectSteelMode.process_mode()
             else:
-                self.mergeMode.process_mode(frame)
+                # if not every 5th frame, then skip
+                if self.skipped_frames_for_merge != self.number_of_frames_to_skip_for_merge:
+                    self.skipped_frames_for_merge = self.skipped_frames_for_merge + 1
+                    continue
+                # in other case, process it
+                else:
+                    self.skipped_frames_for_merge = 0
+                    self.mergeMode.process_mode(frame)
