@@ -1,6 +1,4 @@
 import numpy
-import cv2
-
 
 class BarrelsDetector:
     barrel_height = 28  # 68 if crop full barrel

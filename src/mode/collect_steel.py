@@ -1,5 +1,4 @@
 from src.mobile import Mobile
-from time import sleep
 import random
 
 

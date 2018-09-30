@@ -30,26 +30,18 @@ class ModeController:
         video1.start()
         time.sleep(1)
         camera = cv2.VideoCapture(self.streamingUri)
-        mode = 'default'
-        font = cv2.FONT_HERSHEY_SIMPLEX
         while True:
             pass
             okay, frame = camera.read()
             if not okay:
                 continue
-            cv2.putText(frame, mode, (200, 620), font, 0.8, (255, 255, 255), 2, cv2.LINE_AA)
-            cv2.imshow("video", frame)
-
+            cv2.imshow('test', frame)
             cv2.waitKey(1)
             if self.resolveAntiMacroMode.is_mode_active(frame):
                 self.resolveAntiMacroMode.process_mode()
-                mode = 'Anti'
             elif self.collectMagnetCloudMode.is_mode_active(frame):
-                mode = 'Cloud'
                 self.collectMagnetCloudMode.process_mode()
             elif self.collectSteelMode.is_mode_active(frame):
-                mode = 'Steel'
                 self.collectSteelMode.process_mode()
             else:
-                mode = 'Merge'
                 self.mergeMode.process_mode(frame)

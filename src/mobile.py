@@ -73,11 +73,11 @@ UP = 0
 
 class Mobile:
     def pack(self, type, code, value):
-        # return pack('<IIHHi', 0, 0, type, code, value)
+        return pack('<IIHHi', 0, 0, type, code, value)
         pass
 
     def outputEvent(self, type, code, value):
-        # stdout.buffer.write(self.pack(type, code, value))
+        stdout.buffer.write(self.pack(type, code, value))
         pass
 
     def initTouch(self):
