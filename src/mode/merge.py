@@ -52,9 +52,9 @@ class Merge:
         pairs_to_merge = []
         barrel_per_position = self.barrels_detector.types_per_position(frame)
         for barrel_position, barrel_level in enumerate(barrel_per_position):
-            if barrel_level >= self.max_level:
-                self.remove_barrel(barrel_position)
-                continue
+            # if barrel_level >= self.max_level:
+            #     self.remove_barrel(barrel_position)
+            #     continue
 
             if barrel_level not in waiting_for_pair:
                 waiting_for_pair[barrel_level] = []

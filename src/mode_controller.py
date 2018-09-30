@@ -37,6 +37,9 @@ class ModeController:
             pass
             okay, frame = camera.read()
             if not okay:
+                camera.release()
+                cv2.destroyAllWindows()
+                camera = cv2.VideoCapture(self.streamingUri)
                 continue
             cv2.imshow('test', frame)
             cv2.waitKey(1)
