@@ -1,0 +1,4 @@
+python3 -m pip install opencv
+python3 -m pip install numpy
+python3 -m pip install pyocr
+sudo apt-get install tesseract-ocr

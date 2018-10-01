@@ -32,6 +32,10 @@ class VideoStream(threading.Thread):
             stderr=subprocess.PIPE
         )
 
+    def kill_video_stream(self):
+        self.video.kill()
+        self.server.kill()
+
     def run(self):
         self.initialize_video()
         self.initialize_tcp_server()
