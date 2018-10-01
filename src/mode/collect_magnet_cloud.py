@@ -5,10 +5,10 @@ import random
 class CollectMagnetCloud:
     mobile = None
 
-    yMin = 0
-    yMax = 40
-    xMin = 200
-    xMax = 300
+    y_min = 0
+    y_max = 40
+    x_min = 200
+    x_max = 300
 
     minimumColorToExpect = 200
 
@@ -19,7 +19,7 @@ class CollectMagnetCloud:
         self.mobile = Mobile()
 
     def is_mode_active(self, frame):
-        cropped = frame[self.yMin:self.yMax, self.xMin:self.xMax]
+        cropped = frame[self.y_min:self.y_max, self.x_min:self.x_max]
         average_color = [cropped[:, :, i].mean() for i in range(cropped.shape[-1])]
 
         if all(i > self.minimumColorToExpect for i in average_color):

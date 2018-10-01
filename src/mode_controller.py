@@ -41,8 +41,8 @@ class ModeController:
                 cv2.destroyAllWindows()
                 camera = cv2.VideoCapture(self.streamingUri)
                 continue
-            cv2.imshow('test', frame)
-            cv2.waitKey(1)
+            # cv2.imshow('test', frame)
+            # cv2.waitKey(1)
             if self.resolveAntiMacroMode.is_mode_active(frame):
                 self.resolveAntiMacroMode.process_mode()
             elif self.collectMagnetCloudMode.is_mode_active(frame):
