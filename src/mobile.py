@@ -70,25 +70,39 @@ BTN_TOOL_FINGER = 0x145
 DOWN = 1
 UP = 0
 
+back_button_position_x = 250
+back_button_position_y = 1850
+
+
 def packEvent(type, code, value):
     return pack('<IIHHi', 0, 0, type, code, value)
     pass
+
 
 def outputEvent(type, code, value):
     stdout.buffer.write(packEvent(type, code, value))
     pass
 
+
 def initTouch():
     outputEvent(EV_ABS, ABS_MT_SLOT, 0)
     outputEvent(EV_ABS, ABS_MT_TRACKING_ID, random.randint(1, 100000))
+
 
 def clearTouch():
     outputEvent(EV_ABS, ABS_MT_TRACKING_ID, -1)
     outputEvent(EV_SYN, SYN_REPORT, 0)
     stdout.buffer.flush()
 
+
 def actionDuringTouch(x, y):
     outputEvent(EV_ABS, ABS_MT_POSITION_X, x)
     outputEvent(EV_ABS, ABS_MT_POSITION_Y, y)
     outputEvent(EV_SYN, SYN_REPORT, 0)
     stdout.buffer.flush()
+
+
+def click_back_button():
+    initTouch()
+    actionDuringTouch(back_button_position_x + random.randint(10, 20), back_button_position_y + random.randint(10, 20))
+    clearTouch()
