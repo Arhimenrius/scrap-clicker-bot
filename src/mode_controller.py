@@ -1,9 +1,10 @@
 from src.video_stream import VideoStream
-from src.mode.collect_magnet_cloud import CollectMagnetCloud
-from src.mode.collect_steel import CollectSteel
+from src.mode.magnet_cloud import CollectMagnetCloud
+from src.mode.steel import CollectSteel
 from src.mode.merge import Merge
-from src.mode.resolve_anti_macro import DetectAntiMacro
-from src.mode.resolve_anti_macro import ResolveAntiMacro
+from src.mode.anti_macro import DetectAntiMacro
+from src.mode.anti_macro import ResolveAntiMacro
+from src.mode.ad import is_mode_active as is_ad_active
 import cv2
 from time import sleep
 
@@ -14,8 +15,8 @@ class ModeController:
     mode = 'default'
     portForStreaming = '5777'
     streamingUri = ''
-    collectMagnetCloudMode = None
-    collectSteelMode = None
+    magnet_cloud_mode = None
+    steel_mode = None
     mergeMode = None
     detect_anti_macro_mode = None
 
@@ -24,8 +25,8 @@ class ModeController:
 
     def __init__(self):
         self.streamingUri = 'tcp://127.0.0.1:' + self.portForStreaming
-        self.collectMagnetCloudMode = CollectMagnetCloud()
-        self.collectSteelMode = CollectSteel()
+        self.magnet_cloud_mode = CollectMagnetCloud()
+        self.steel_mode = CollectSteel()
         self.mergeMode = Merge()
         self.detect_anti_macro_mode = DetectAntiMacro()
 
@@ -56,10 +57,12 @@ class ModeController:
                         if not resolver.isAlive():
                             resolver = None
 
-            elif self.collectMagnetCloudMode.is_mode_active(frame):
-                self.collectMagnetCloudMode.process_mode()
-            elif self.collectSteelMode.is_mode_active(frame):
-                self.collectSteelMode.process_mode()
+            elif self.magnet_cloud_mode.is_mode_active(frame):
+                self.magnet_cloud_mode.process_mode()
+            elif self.steel_mode.is_mode_active(frame):
+                self.steel_mode.process_mode()
+            # elif is_ad_active(frame):
+            #     pass
             else:
                 if self.skipped_frames != self.number_of_frames_to_skip:
                     self.skipped_frames = self.skipped_frames + 1

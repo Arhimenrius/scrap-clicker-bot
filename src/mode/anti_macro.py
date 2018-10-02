@@ -1,9 +1,8 @@
-from src.mobile import Mobile
+import src.mobile as mobile
 from src.digit_detector import detect_digit
 import random
 import threading
 from time import sleep
-import cv2
 
 y_min = 90
 y_max = 503
@@ -53,8 +52,6 @@ buttons_position_on_mobile = [
 ]
 
 confirm_button = [530, 1350]
-
-mobile = Mobile()
 
 
 class DetectAntiMacro:

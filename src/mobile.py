@@ -70,27 +70,25 @@ BTN_TOOL_FINGER = 0x145
 DOWN = 1
 UP = 0
 
+def packEvent(type, code, value):
+    return pack('<IIHHi', 0, 0, type, code, value)
+    pass
 
-class Mobile:
-    def pack(self, type, code, value):
-        return pack('<IIHHi', 0, 0, type, code, value)
-        pass
+def outputEvent(type, code, value):
+    stdout.buffer.write(packEvent(type, code, value))
+    pass
 
-    def outputEvent(self, type, code, value):
-        stdout.buffer.write(self.pack(type, code, value))
-        pass
+def initTouch():
+    outputEvent(EV_ABS, ABS_MT_SLOT, 0)
+    outputEvent(EV_ABS, ABS_MT_TRACKING_ID, random.randint(1, 100000))
 
-    def initTouch(self):
-        self.outputEvent(EV_ABS, ABS_MT_SLOT, 0)
-        self.outputEvent(EV_ABS, ABS_MT_TRACKING_ID, random.randint(1, 100000))
+def clearTouch():
+    outputEvent(EV_ABS, ABS_MT_TRACKING_ID, -1)
+    outputEvent(EV_SYN, SYN_REPORT, 0)
+    stdout.buffer.flush()
 
-    def clearTouch(self):
-        self.outputEvent(EV_ABS, ABS_MT_TRACKING_ID, -1)
-        self.outputEvent(EV_SYN, SYN_REPORT, 0)
-        stdout.buffer.flush()
-
-    def actionDuringTouch(self, x, y):
-        self.outputEvent(EV_ABS, ABS_MT_POSITION_X, x)
-        self.outputEvent(EV_ABS, ABS_MT_POSITION_Y, y)
-        self.outputEvent(EV_SYN, SYN_REPORT, 0)
-        stdout.buffer.flush()
+def actionDuringTouch(x, y):
+    outputEvent(EV_ABS, ABS_MT_POSITION_X, x)
+    outputEvent(EV_ABS, ABS_MT_POSITION_Y, y)
+    outputEvent(EV_SYN, SYN_REPORT, 0)
+    stdout.buffer.flush()

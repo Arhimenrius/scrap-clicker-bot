@@ -1,4 +1,4 @@
-from src.mobile import Mobile
+import src.mobile as mobile
 from src.barrels_detector import BarrelsDetector
 from time import sleep
 import random
@@ -44,7 +44,6 @@ class Merge:
     position_under_remove_confirm_button = 14
 
     def __init__(self):
-        self.mobile = Mobile()
         self.barrels_detector = BarrelsDetector()
 
     def find_pairs(self, frame):
@@ -69,63 +68,63 @@ class Merge:
 
     def remove_barrel(self, position_to_remove):
         element_position = self.elements[position_to_remove]
-        self.mobile.initTouch()
-        self.mobile.actionDuringTouch(
+        mobile.initTouch()
+        mobile.actionDuringTouch(
             element_position[0] - self.distance_from_final_position_1 + random.randint(0, 10),
             element_position[1] - self.distance_from_final_position_1 + random.randint(0, 10)
         )
-        self.mobile.clearTouch()
-        self.mobile.initTouch()
-        self.mobile.actionDuringTouch(
+        mobile.clearTouch()
+        mobile.initTouch()
+        mobile.actionDuringTouch(
             element_position[0] - self.distance_from_final_position_1 + random.randint(0, 10),
             element_position[1] - self.distance_from_final_position_1 + random.randint(0, 10)
         )
-        self.mobile.clearTouch()
+        mobile.clearTouch()
         sleep(0.2)
 
         place_to_confirm = self.elements[self.position_under_remove_confirm_button]
-        self.mobile.initTouch()
-        self.mobile.actionDuringTouch(
+        mobile.initTouch()
+        mobile.actionDuringTouch(
             place_to_confirm[0] - self.distance_from_final_position_1 + random.randint(0, 10),
             place_to_confirm[1] - self.distance_from_final_position_1 + random.randint(0, 10)
         )
-        self.mobile.clearTouch()
+        mobile.clearTouch()
 
     def process_mode(self, frame):
         pairs = self.find_pairs(frame)
         for pair in pairs:
-            self.mobile.initTouch()
+            mobile.initTouch()
             element_position_1 = self.elements[pair[0]]
             element_position_2 = self.elements[pair[1]]
-            self.mobile.actionDuringTouch(
+            mobile.actionDuringTouch(
                 element_position_1[0] + random.randint(0, 10),
                 element_position_1[1] + random.randint(0, 10)
             )
 
-            self.mobile.actionDuringTouch(
+            mobile.actionDuringTouch(
                 element_position_2[0] - self.distance_from_final_position_1 + random.randint(0, 10),
                 element_position_2[1] - self.distance_from_final_position_1 + random.randint(0, 10)
             )
 
-            self.mobile.actionDuringTouch(
+            mobile.actionDuringTouch(
                 element_position_2[0] - self.distance_from_final_position_2 + random.randint(0, 10),
                 element_position_2[1] - self.distance_from_final_position_2 + random.randint(0, 10)
             )
 
-            self.mobile.actionDuringTouch(
+            mobile.actionDuringTouch(
                 element_position_2[0] - self.distance_from_final_position_3 + random.randint(0, 10),
                 element_position_2[1] - self.distance_from_final_position_3 + random.randint(0, 10)
             )
 
-            self.mobile.actionDuringTouch(
+            mobile.actionDuringTouch(
                 element_position_2[0] + random.randint(0, 10),
                 element_position_2[1] + random.randint(0, 10)
             )
 
-            self.mobile.clearTouch()
+            mobile.clearTouch()
 
             # random touch to avoid cheat detector
 
-            self.mobile.initTouch()
-            self.mobile.actionDuringTouch(0, random.randint(200, 1000))
-            self.mobile.clearTouch()
+            mobile.initTouch()
+            mobile.actionDuringTouch(0, random.randint(200, 1000))
+            mobile.clearTouch()

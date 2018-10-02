@@ -1,4 +1,4 @@
-from src.mobile import Mobile
+import src.mobile as mobile
 import random
 
 
@@ -21,9 +21,6 @@ class CollectSteel:
     collectSteelSecondRowY = 650
     stepSize = 75
 
-    def __init__(self):
-        self.mobile = Mobile()
-
     def is_mode_active(self, frame):
         cropped = frame[self.y_min:self.y_max, self.x_min:self.x_max]
 
@@ -36,16 +33,16 @@ class CollectSteel:
         return False
 
     def process_mode(self):
-        self.mobile.initTouch()
+        mobile.initTouch()
         for step in range(14):
             x = (self.stepSize * step) + random.randint(0, 10)
             y = self.collectSteelFirstRowY + random.randint(0, 10)
 
-            self.mobile.actionDuringTouch(x, y)
+            mobile.actionDuringTouch(x, y)
 
         for step in range(14):
             x = (self.stepSize * step) + random.randint(0, 10)
             y = self.collectSteelSecondRowY + random.randint(0, 10)
 
-            self.mobile.actionDuringTouch(x, y)
-        self.mobile.clearTouch()
+            mobile.actionDuringTouch(x, y)
+        mobile.clearTouch()
