@@ -40,7 +40,7 @@ class Merge:
     distance_from_final_position_2 = 30
     distance_from_final_position_3 = 10
 
-    max_level = 7
+    max_level = 9
     position_under_remove_confirm_button = 14
 
     def __init__(self):
