@@ -6,4 +6,4 @@ It's using
 - OpenCV for determining what is happening on the screen
 - Touchscreen driver for merging elements
 
-**Bot is unusable anymore**
+**Bot is unusable. Posting it for reference**
